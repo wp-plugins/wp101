@@ -1,5 +1,5 @@
 === WP101 ===
-Contributors: wp101, markjaquith
+Contributors: shawndh, markjaquith
 Tags: wp101, tutorials, video, help, learn, screencast
 Requires at least: 3.2
 Tested up to: 3.2.1
