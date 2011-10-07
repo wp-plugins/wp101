@@ -12,6 +12,7 @@ Author URI: http://wp101plugin.com/
 $_wp101_api_key = '';
 
 class WP101_Plugin {
+	public static $db_version = 2;
 	public static $instance;
 	public static $api_base = 'http://wp101plugin.com/?wp101-api-server&';
 	public static $subscribe_url = 'http://wp101plugin.com/';
@@ -28,6 +29,14 @@ class WP101_Plugin {
 
 		// Actions and filters
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
+
+		// Upgrades
+		$db_version = get_option( 'wp101_db_version' );
+		if ( $db_version < 2 ) {
+			// Flush it out
+			delete_transient( 'wp101_topics' );
+			update_option( 'wp101_db_version', 2 );
+		}
 	}
 
 	public function admin_menu() {
@@ -137,10 +146,10 @@ class WP101_Plugin {
 				return $topics;
 			} else {
 				$result = wp_remote_get( self::$api_base . 'action=get_topics&api_key=' . $this->get_key() );
-				$result = json_decode( $result['body'] );
-				if ( !$result->error && count( $result->data ) ) {
-					set_transient( 'wp101_topics', (array) $result->data, 24*3600 ); // Good for a day.
-					return (array) $result->data;
+				$result = json_decode( $result['body'], true );
+				if ( !$result['error'] && count( $result['data'] ) ) {
+					set_transient( 'wp101_topics', $result['data'], 24*3600 ); // Good for a day.
+					return $result['data'];
 				}
 			}
 		}
@@ -152,7 +161,7 @@ class WP101_Plugin {
 			return false;
 		$return = '<ul>';
 		foreach ( $topics as $topic ) {
-			$return .= '<li class="page-item-' . $topic->id . '"><a href="' . admin_url( 'index.php?page=wp101&document=' . $topic->id ) . '">' . esc_html( $topic->title ) . '</a></li>';
+			$return .= '<li class="page-item-' . $topic['id'] . '"><a href="' . admin_url( 'index.php?page=wp101&document=' . $topic['id'] ) . '">' . esc_html( $topic['title'] ) . '</a></li>';
 		}
 		$return .= '</ul>';
 		return $return;
@@ -175,10 +184,10 @@ class WP101_Plugin {
 	<h3><?php _e( 'Need an API Key?', 'wp101' ); ?></h3>
 	<p><a class="button" href="<?php echo esc_url( self::$subscribe_url ); ?>" title="<?php esc_attr_e( 'WP101 Tutorial Plugin', 'wp101' ); ?>" target="_blank"><?php esc_html_e( 'View Subscription Details' ); ?></a></p>
 
-	<h3><?php _e( 'Have an API Key?' ); ?></h3>
+	<h3 style="margin-top: 30px;"><?php _e( 'Have an API Key?' ); ?></h3>
 	<form action="" method="post">
 	<?php wp_nonce_field( 'wp101-update_key' ); ?>
-	<p><label for="wp101-api-key">WP101.com API KEY: </label><input type="text" id="wp101-api-key" name="wp101_api_key" value="<?php echo esc_attr( $this->get_key() ); ?>" /></p>
+	<p><label for="wp101-api-key">WP101Plugin.com API KEY: </label><input type="text" id="wp101-api-key" name="wp101_api_key" value="<?php echo esc_attr( $this->get_key() ); ?>" /></p>
 	<?php submit_button( 'Save API Key' ); ?>
 	</form>
 <?php else : ?>
@@ -196,8 +205,8 @@ class WP101_Plugin {
 <?php if ( $document_id ) : ?>
 	<?php $document = $this->get_document( $document_id ); ?>
 	<?php if ( $document ) : ?>
-		<h2><?php echo esc_html( $document->title ); ?></h2>
-		<?php echo $document->content; ?>
+		<h2><?php echo esc_html( $document['title'] ); ?></h2>
+		<?php echo $document['content']; ?>
 	<?php else : ?>
 	<p><?php _e( 'The requested tutorial could not be found', 'wp101' ); ?>
 	<?php endif; ?>
