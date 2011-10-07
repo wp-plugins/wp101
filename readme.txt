@@ -5,7 +5,7 @@ Requires at least: 3.2
 Tested up to: 3.2.1
 Stable tag: 1.1
 
-Use your [WP101Plugin.com](http://wp101plugin.com/) API key to deliver WordPress tutorial videos to the WP dashboard!
+Use your WP101Plugin.com API key to deliver WordPress tutorial videos to the WP dashboard!
 
 == Description ==
 
