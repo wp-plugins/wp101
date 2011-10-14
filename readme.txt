@@ -3,9 +3,9 @@ Contributors: shawndh, markjaquith
 Tags: wp101, tutorials, dashboard, video, help, learn, screencast
 Requires at least: 3.2
 Tested up to: 3.2.1
-Stable tag: 1.1
+Stable tag: 1.0.1
 
-Use your WP101Plugin.com API key to deliver WordPress tutorial videos to the WP dashboard!
+Delivers a complete set of WordPress tutorial videos directly within the WP dashboard!
 
 == Description ==
 
@@ -38,7 +38,7 @@ You can ask your developer to renew their subscription, or you can go to [WP101P
 
 == Changelog ==
 
-= 1.1 =
+= 1.0.1 =
 * Minor bug fix for multisite installations.
 
 = 1.0 =
@@ -46,7 +46,7 @@ You can ask your developer to renew their subscription, or you can go to [WP101P
 
 == Upgrade Notice ==
 
-= 1.1 =
+= 1.0.1 =
 * Minor bug fix for multisite installations.
 
 = 1.0 =
