@@ -19,7 +19,7 @@ Simply use your [WP101Plugin.com](http://wp101plugin.com/) API key to deliver Wo
 2. Copy your API key from your [WP101Plugin.com](http://wp101plugin.com/) account page.
 3. Upload the `wp101` directory to the `wp-content/plugins/` directory.
 4. Activate the plugin through the 'Plugins' menu in WordPress.
-5. Go to Dashboard &rarr; WP101, and enter your API key.
+5. Go to WP101 &rarr; Settings, and enter your API key.
 
 == Frequently Asked Questions ==
 
