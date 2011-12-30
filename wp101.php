@@ -2,7 +2,7 @@
 /*
 Plugin Name: WP101
 Description: WordPress tutorial videos, delivered directly to your WordPress admin
-Version: 1.0
+Version: 1.1
 Author: WP101plugin.com
 Author URI: http://wp101plugin.com/
 */
@@ -40,7 +40,7 @@ class WP101_Plugin {
 	}
 
 	public function admin_menu() {
-		$hook = add_dashboard_page( _x( 'WP101', 'page title', 'wp101' ), _x( 'WP101', 'menu title', 'wp101' ), 'publish_posts', 'wp101', array( $this, 'render_listing_page' ) );
+		$hook = add_menu_page( _x( 'WP101', 'page title', 'wp101' ), _x( 'WP101', 'menu title', 'wp101' ), 'read', 'wp101', array( $this, 'render_listing_page' ) );
 		add_action( "load-{$hook}", array( $this, 'load' ) );
 	}
 
@@ -70,14 +70,14 @@ class WP101_Plugin {
 			if ( 'valid' == $result ) {
 				update_option( 'wp101_api_key', $new_key );
 				set_transient( 'wp101_message', 'valid', 300 );
-				wp_redirect( admin_url( 'index.php?page=wp101' ) );
+				wp_redirect( admin_url( 'admin.php?page=wp101' ) );
 				exit();
 			} elseif ( 'expired' == $result ) {
 				set_transient( 'wp101_message', 'expired', 300 );
 			} else {
 				set_transient( 'wp101_message', 'error', 300 );
 			}
-			wp_redirect( admin_url( 'index.php?page=wp101&configure=1' ) );
+			wp_redirect( admin_url( 'admin.php?page=wp101&configure=1' ) );
 			exit();
 		} elseif ( $message = get_transient( 'wp101_message' ) ) {
 			delete_transient( 'wp101_message' );
@@ -86,7 +86,7 @@ class WP101_Plugin {
 			$result = $this->validate_api_key();
 			if ( 'valid' !== $result && current_user_can( 'manage_options' ) ) {
 				set_transient( 'wp101_message', $result, 300 );
-				wp_redirect( admin_url( 'index.php?page=wp101&configure=1' ) );
+				wp_redirect( admin_url( 'admin.php?page=wp101&configure=1' ) );
 				exit();
 			}
 		}
@@ -161,7 +161,7 @@ class WP101_Plugin {
 			return false;
 		$return = '<ul>';
 		foreach ( $topics as $topic ) {
-			$return .= '<li class="page-item-' . $topic['id'] . '"><a href="' . admin_url( 'index.php?page=wp101&document=' . $topic['id'] ) . '">' . esc_html( $topic['title'] ) . '</a></li>';
+			$return .= '<li class="page-item-' . $topic['id'] . '"><a href="' . admin_url( 'admin.php?page=wp101&document=' . $topic['id'] ) . '">' . esc_html( $topic['title'] ) . '</a></li>';
 		}
 		$return .= '</ul>';
 		return $return;
@@ -177,7 +177,7 @@ class WP101_Plugin {
 			</style>
 		<?php endif; ?>
 <div class="wrap">
-	<?php screen_icon(); ?><h2><?php _ex( 'WP101', 'h2 title', 'wp101' ); ?></h2>
+	<div id="icon-plugins" class="icon32"></div><h2 style="font-weight: bold;"><?php _ex( 'WP101 Video Tutorials', 'h2 title', 'wp101' ); ?></h2>
 
 <?php if ( isset( $_GET['configure'] ) && $_GET['configure'] ) : ?>
 	<p><?php _e( 'WP101 requires an API key to provide access to the latest WordPress tutorial videos.', 'wp101' ); ?></p>
@@ -187,7 +187,7 @@ class WP101_Plugin {
 	<h3 style="margin-top: 30px;"><?php _e( 'Have an API Key?' ); ?></h3>
 	<form action="" method="post">
 	<?php wp_nonce_field( 'wp101-update_key' ); ?>
-	<p><label for="wp101-api-key">WP101Plugin.com API KEY: </label><input type="text" id="wp101-api-key" name="wp101_api_key" value="<?php echo esc_attr( $this->get_key() ); ?>" /></p>
+	<p><label for="wp101-api-key">WP101Plugin.com API KEY: </label><input type="password" id="wp101-api-key" name="wp101_api_key" value="<?php echo esc_attr( $this->get_key() ); ?>" /></p>
 	<?php submit_button( 'Save API Key' ); ?>
 	</form>
 <?php else : ?>
@@ -195,7 +195,7 @@ class WP101_Plugin {
 <?php $pages = $this->get_help_topics_html(); ?>
 <?php if ( trim( $pages ) ) : ?>
 <div id="wp101-topic-listing">
-<h3><?php _e( 'Tutorials', 'wp101' ); ?><?php if ( current_user_can( 'publish_pages' ) ) : ?><span><a class="button" href="<?php echo admin_url( 'index.php?page=wp101&configure=1' ); ?>"><?php _ex( 'Settings', 'Button with limited space', 'wp101' ); ?></a></span><?php endif; ?></h3>
+<h3><?php _e( 'Tutorials', 'wp101' ); ?><?php if ( current_user_can( 'publish_pages' ) ) : ?><span><a class="button" href="<?php echo admin_url( 'admin.php?page=wp101&configure=1' ); ?>"><?php _ex( 'Settings', 'Button with limited space', 'wp101' ); ?></a></span><?php endif; ?></h3>
 <ul>
 <?php echo $pages; ?>
 </ul>
@@ -214,7 +214,7 @@ class WP101_Plugin {
 </div>
 <?php else : ?>
 	<?php if ( current_user_can( 'manage_options' ) ) : ?>
-		<p><?php printf( __( 'No help topics found. <a href="%s">Configure your API key</a>.', 'wp101' ), admin_url( 'index.php?page=wp101&configure=1' ) ); ?></p>
+		<p><?php printf( __( 'No help topics found. <a href="%s">Configure your API key</a>.', 'wp101' ), admin_url( 'admin.php?page=wp101&configure=1' ) ); ?></p>
 	<?php else : ?>
 		<p><?php _e( 'No help topics found. Contact the site administrator to configure your API key.', 'wp101' ); ?></p>
 	<?php endif; ?>
