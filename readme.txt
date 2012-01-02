@@ -3,7 +3,7 @@ Contributors: shawndh, markjaquith
 Tags: wp101, tutorials, video, help, learn, screencast
 Requires at least: 3.2
 Tested up to: 3.3
-Stable tag: 1.1
+Stable tag: 1.1.1
 
 Delivers a complete set of WordPress tutorial videos directly within the WP dashboard!
 
@@ -38,6 +38,10 @@ You can ask your developer to renew their subscription, or you can go to [WP101P
 
 == Changelog ==
 
+= 1.1.1 =
+* Minor change to ensure hardcoded API keys are written to the database.
+* Added a small icon to the menu item to help it be more easily visible.
+
 = 1.1 =
 * Moved WP101 to its own separate menu item at the bottom of the navigation menu.
 * Changed the API Key input field to a password field, instead of a regular text field.
@@ -50,6 +54,9 @@ You can ask your developer to renew their subscription, or you can go to [WP101P
 * First version!
 
 == Upgrade Notice ==
+
+= 1.1.1 =
+* Minor fix related to hardcoded API keys. Added a custom menu icon.
 
 = 1.1 =
 * Made API Key input field more secure, and a couple of widely-requested minor changes.
