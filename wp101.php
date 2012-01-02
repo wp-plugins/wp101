@@ -40,7 +40,8 @@ class WP101_Plugin {
 	}
 
 	public function admin_menu() {
-		$hook = add_menu_page( _x( 'WP101', 'page title', 'wp101' ), _x( 'WP101', 'menu title', 'wp101' ), 'read', 'wp101', array( $this, 'render_listing_page' ) );
+		$wp101_icon_url = plugin_dir_url( __FILE__ ) . '/images/icon.png';
+		$hook = add_menu_page( _x( 'WP101', 'page title', 'wp101' ), _x( 'WP101', 'menu title', 'wp101' ), 'read', 'wp101', array( $this, 'render_listing_page' ), $wp101_icon_url );
 		add_action( "load-{$hook}", array( $this, 'load' ) );
 	}
 
@@ -53,12 +54,14 @@ class WP101_Plugin {
 	}
 
 	private function get_key() {
-		global $_wp101_api_key;
-		$db = get_option( 'wp101_api_key' );
-		if ( empty( $db ) && isset( $_wp101_api_key ) && !empty( $_wp101_api_key ) )
-			return $_wp101_api_key;
-		else
-			return $db;
+			global $_wp101_api_key;
+			$db = get_option( 'wp101_api_key' );
+			if ( empty( $db ) && isset( $_wp101_api_key ) && !empty( $_wp101_api_key ) ) {
+				update_option( 'wp101_api_key', $_wp101_api_key );
+				return $_wp101_api_key;		
+			} else {
+				return $db;
+			}
 	}
 
 	public function load() {
@@ -177,7 +180,7 @@ class WP101_Plugin {
 			</style>
 		<?php endif; ?>
 <div class="wrap">
-	<div id="icon-plugins" class="icon32"></div><h2 style="font-weight: bold;"><?php _ex( 'WP101 Video Tutorials', 'h2 title', 'wp101' ); ?></h2>
+	<h2 style="font-weight: bold;"><?php _ex( 'WordPress 101 Video Tutorials', 'h2 title', 'wp101' ); ?></h2>
 
 <?php if ( isset( $_GET['configure'] ) && $_GET['configure'] ) : ?>
 	<p><?php _e( 'WP101 requires an API key to provide access to the latest WordPress tutorial videos.', 'wp101' ); ?></p>
