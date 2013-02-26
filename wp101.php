@@ -2,8 +2,8 @@
 /*
 Plugin Name: WP101
 Description: WordPress tutorial videos, delivered directly to your WordPress admin
-Version: 2.0.1
-Author: WP101plugin.com
+Version: 2.0.2
+Author: WP101Plugin.com
 Author URI: http://wp101plugin.com/
 */
 
@@ -50,8 +50,13 @@ class WP101_Plugin {
 	private function validate_api_key_with_server( $key=NULL ) {
 		if ( NULL === $key )
 			$key = $this->get_key();
-		$result = wp_remote_get( self::$api_base . 'action=check_key&api_key=' . $key );
-		$result = json_decode( $result['body'] );
+		$query = wp_remote_get( self::$api_base . 'action=check_key&api_key=' . $key, array( 'timeout' => 45, 'sslverify' => false, 'user-agent' => 'WP101Plugin' ) );
+
+		if ( is_wp_error( $query ) )
+			return false; // Failed to query the server
+
+		$result = json_decode( wp_remote_retrieve_body( $query ) );
+
 		return $result->data->status;
 	}
 
@@ -60,7 +65,7 @@ class WP101_Plugin {
 			$db = get_option( 'wp101_api_key' );
 			if ( empty( $db ) && isset( $_wp101_api_key ) && !empty( $_wp101_api_key ) ) {
 				update_option( 'wp101_api_key', $_wp101_api_key );
-				return $_wp101_api_key;		
+				return $_wp101_api_key;
 			} else {
 				return $db;
 			}
@@ -112,11 +117,11 @@ class WP101_Plugin {
 	}
 
 	public function api_key_updated_video_message() {
-		echo '<div class="updated"><p>' . __( 'Your custom video was updated!', 'wp101' ) . '</p></div>';		
+		echo '<div class="updated"><p>' . __( 'Your custom video was updated!', 'wp101' ) . '</p></div>';
 	}
 
 	public function api_key_added_video_message() {
-		echo '<div class="updated"><p>' . __( 'Your custom video was added!', 'wp101' ) . '</p></div>';		
+		echo '<div class="updated"><p>' . __( 'Your custom video was added!', 'wp101' ) . '</p></div>';
 	}
 
 	public function api_key_valid_message() {
@@ -125,10 +130,6 @@ class WP101_Plugin {
 
 	public function api_key_error_message() {
 		echo '<div class="updated"><p>' . __( 'The WP101Plugin.com API key you provided is not valid.', 'wp101' ) . '</p></div>';
-	}
-
-	public function api_key_notset_message() {
-		echo '<div class="updated"><p>' . __( 'You need to provide a WP101Plugin.com API key!', 'wp101' ) . '</p></div>';
 	}
 
 	public function api_key_expired_message() {
@@ -210,7 +211,7 @@ class WP101_Plugin {
 			if ( $topics = get_transient( 'wp101_topics' ) ) {
 				return $topics;
 			} else {
-				$result = wp_remote_get( self::$api_base . 'action=get_topics&api_key=' . $this->get_key() );
+				$result = wp_remote_get( self::$api_base . 'action=get_topics&api_key=' . $this->get_key(), array( 'timeout' => 45, 'sslverify' => false, 'user-agent' => 'WP101Plugin' ) );
 				$result = json_decode( $result['body'], true );
 				if ( !$result['error'] && count( $result['data'] ) ) {
 					set_transient( 'wp101_topics', $result['data'], 24*3600 ); // Good for a day.
@@ -318,7 +319,7 @@ class WP101_Plugin {
 	<?php if ( current_user_can( 'manage_options' ) && isset( $_GET['configure'] ) && $_GET['configure'] ) : ?>
 	<?php if ( !isset( $_GET['document'] ) ) : ?>
 		<h3 class="title"><?php _e( 'API Key', 'wp101' ); ?></h3>
-	
+
 		<?php if ( 'valid' !== $this->validate_api_key() ) : ?>
 			<div class="updated">
 			<p><?php _e( 'WP101 requires a WP101Plugin.com API key to provide access to the latest WordPress tutorial videos.', 'wp101' ); ?> <a class="button" href="<?php echo esc_url( self::$subscribe_url ); ?>" title="<?php esc_attr_e( 'WP101 Tutorial Plugin', 'wp101' ); ?>" target="_blank"><?php esc_html_e( 'Subscription Info' ); ?></a></p>
@@ -350,7 +351,7 @@ class WP101_Plugin {
 		<?php echo $this->get_help_topics_html( true ); ?>
 		<?php endif; ?>
 	<?php endif; ?>
-	
+
 	<?php if ( current_user_can( 'unfiltered_html' ) ) : ?>
 		<?php $editable_video = isset( $_GET['document'] ) ? $this->get_custom_help_topic( $_GET['document'] ) : false; ?>
 		<?php if ( $editable_video ) : ?>
