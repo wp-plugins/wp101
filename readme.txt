@@ -2,18 +2,18 @@
 Contributors: shawndh, markjaquith, mordauk, wpsmith
 Tags: wp101, tutorials, video, help, learn, screencast
 Requires at least: 3.2
-Tested up to: 3.6
-Stable tag: 2.0.6
+Tested up to: 3.8
+Stable tag: 2.1
  
 Delivers a complete set of WordPress tutorial videos directly within the dashboard. Choose which videos to show, or add your own!
  
 == Description ==
  
-The WP101 Tutorial Plugin delivers a complete set of professionally-produced "WordPress 101" tutorial videos directly within the dashboard.
- 
+The WP101 Plugin delivers a complete set of professionally-produced "WordPress 101" tutorial videos directly within the dashboard.
+
 Simply enter your [WP101Plugin.com](http://wp101plugin.com/) API key to deliver WordPress tutorial videos within the WP administration panel. Perfect for teaching your clients the basics of how to use WordPress!
  
-Selectively choose which tutorial videos are shown, or even embed your own custom videos.
+Selectively choose which tutorial videos are shown, and even embed your own custom videos!
  
 == Installation ==
  
@@ -33,7 +33,7 @@ Simply go to: [WP101Plugin.com](http://wp101plugin.com/) and follow the instruct
  
 = Can I choose which video topics are displayed? =
  
-Yes! You can now selectively hide/show individual tutorial videos. Simply go to the Settings panel to choose which videos you'd like to include.
+Yes! You can selectively hide/show individual tutorial videos. Simply go to the Settings panel to choose which videos you'd like to include.
  
 = Can I add my own custom videos? =
  
@@ -56,6 +56,9 @@ Yes! Simply enter your API key into line 12 in the wp101.php file and then insta
  
 == Changelog ==
  
+= 2.1 =
+* Updated for WordPress 3.8, including new menu icon.
+
 = 2.0.6 =
 * Bug fix for missing api_key_notset_message. Thanks, @onebigidea!
 
@@ -98,6 +101,9 @@ Yes! Simply enter your API key into line 12 in the wp101.php file and then insta
 * First version!
  
 == Upgrade Notice ==
+
+= 2.1 =
+* Updated for WordPress 3.8, including new menu icon.
  
 = 2.0.6 =
 * Bug fix for missing api_key_notset_message. Thanks, @onebigidea!
