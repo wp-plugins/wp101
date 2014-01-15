@@ -2,7 +2,7 @@
 /*
 Plugin Name: WP101
 Description: WordPress tutorial videos, delivered directly in the WordPress dashboard.
-Version: 2.1
+Version: 2.1.1
 Author: WP101Plugin.com
 Author URI: http://wp101plugin.com/
 */
@@ -45,7 +45,7 @@ class WP101_Plugin {
 	}
 
 	public function admin_menu() {
-		$hook = add_menu_page( _x( 'WP101', 'page title', 'wp101' ), _x( 'Video Tutorials', 'menu title', 'wp101' ), 'read', 'wp101', array( $this, 'render_listing_page' ), $wp101_icon_url );
+		$hook = add_menu_page( _x( 'WP101', 'page title', 'wp101' ), _x( 'Video Tutorials', 'menu title', 'wp101' ), 'read', 'wp101', array( $this, 'render_listing_page' ) );
 		add_action( "load-{$hook}", array( $this, 'load' ) );
 	}
 
