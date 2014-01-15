@@ -3,7 +3,7 @@ Contributors: shawndh, markjaquith, mordauk, wpsmith
 Tags: wp101, tutorials, video, help, learn, screencast
 Requires at least: 3.2
 Tested up to: 3.8
-Stable tag: 2.1
+Stable tag: 2.1.1
  
 Delivers a complete set of WordPress tutorial videos directly within the dashboard. Choose which videos to show, or add your own!
  
@@ -55,7 +55,10 @@ Yes! Simply enter your API key into line 12 in the wp101.php file and then insta
 2. The configuration interface, where you can enter your API key, hide videos from the list, or even add your own custom videos.
  
 == Changelog ==
- 
+
+= 2.1.1 =
+* Bug fix for missing wp101_icon_url error.
+
 = 2.1 =
 * Updated for WordPress 3.8, including new menu icon.
 
@@ -102,6 +105,9 @@ Yes! Simply enter your API key into line 12 in the wp101.php file and then insta
  
 == Upgrade Notice ==
 
+= 2.1.1 =
+* Bug fix for missing wp101_icon_url error.
+ 
 = 2.1 =
 * Updated for WordPress 3.8, including new menu icon.
  
