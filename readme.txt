@@ -3,7 +3,7 @@ Contributors: shawndh, markjaquith, mordauk, JustinSainton, wpsmith, bhwebworks
 Tags: wp101, tutorials, video, help, learn, screencast
 Requires at least: 3.2
 Tested up to: 4.2.2
-Stable tag: 3.2
+Stable tag: 3.2.1
 
 Delivers a complete set of WordPress tutorial videos directly within the dashboard. Choose which videos to show, or add your own!
 
@@ -154,6 +154,9 @@ _Note: All code examples are using anonymous functions, which work in PHP 5.3+. 
 
 == Changelog ==
 
+= 3.2.1 =
+* Changed title to reflect the new name of the Yoast SEO for WordPress plugin.
+
 = 3.2 =
 * Updated the WordPress SEO Plugin videos for version 2.0.
 * Tested and verified for WordPress 4.2!
@@ -229,6 +232,9 @@ _Note: All code examples are using anonymous functions, which work in PHP 5.3+. 
 * First version!
 
 == Upgrade Notice ==
+
+= 3.2.1 =
+* Changed title to reflect the new name of the Yoast SEO for WordPress plugin.
 
 = 3.2 =
 * We’ve updated the WordPress SEO Plugin videos for version 2.0.
